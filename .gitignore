@@ -22,3 +22,14 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+# Laravel backend
+/app
+/bootstrap
+/config
+/database
+/routes
+/vendor
+/node_modules
+.env
+/storage
+
