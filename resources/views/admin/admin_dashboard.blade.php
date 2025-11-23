@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('title', 'Admin Dashboard')
 
+<livewire:admin.dashboard />
 @section('content')
 <header class="bg-white shadow-md p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold text-purple-600">Admin Dashboard 🛠️</h1>
