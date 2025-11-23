@@ -4,38 +4,42 @@
 
 @section('content')
 <div class="container mt-5">
-    <h2 class="mb-4">📝 Checkout</h2>
+    <h2 class="mb-4">🧾 Checkout</h2>
 
-    @if($cartItems->count() > 0)
-    <form action="{{ route('customer.checkout.placeOrder') }}" method="POST">
-        @csrf
-        <h4>Delivery Details</h4>
-        <div class="mb-3">
-            <label for="address" class="form-label">Delivery Address</label>
-            <input type="text" class="form-control" id="address" name="address" required>
-        </div>
-
-        <h4>Order Summary</h4>
-        <ul class="list-group mb-3">
+    @if(!empty($cart) && count($cart) > 0)
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
             @php $grandTotal = 0; @endphp
-            @foreach($cartItems as $item)
-            @php $total = $item->quantity * $item->food->price; $grandTotal += $total; @endphp
-            <li class="list-group-item d-flex justify-content-between">
-                {{ $item->food->name }} x {{ $item->quantity }}
-                <span>KES {{ $total }}</span>
-            </li>
+            @foreach($cart as $item)
+            @php $total = $item['quantity'] * $item['food']->price; $grandTotal += $total; @endphp
+            <tr>
+                <td>{{ $item['food']->name }}</td>
+                <td>KES {{ $item['food']->price }}</td>
+                <td>{{ $item['quantity'] }}</td>
+                <td>KES {{ $total }}</td>
+            </tr>
             @endforeach
-            <li class="list-group-item d-flex justify-content-between fw-bold">
-                Grand Total
-                <span>KES {{ $grandTotal }}</span>
-            </li>
-        </ul>
-
-        <button type="submit" class="btn btn-success">Place Order</button>
+            <tr>
+                <td colspan="3" class="text-end fw-bold">Grand Total:</td>
+                <td class="fw-bold">KES {{ $grandTotal }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <form action="{{ route('checkout.place') }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-success float-end">Place Order</button>
     </form>
     @else
     <p>Your cart is empty 😔</p>
-    <a href="{{ route('customer.menu') }}" class="btn btn-primary">Browse Menu</a>
+    <a href="{{ route('cart.index') }}" class="btn btn-primary">Back to Cart</a>
     @endif
 </div>
 @endsection

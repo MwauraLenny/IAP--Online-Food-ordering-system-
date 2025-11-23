@@ -22,11 +22,11 @@
             <tr>
                 <td>{{ $order->id }}</td>
                 <td>
-                    <ul>
-                        @foreach($order->items as $item)
-                        <li>{{ $item->food->name }} x {{ $item->quantity }}</li>
-                        @endforeach
-                    </ul>
+                        <ul>
+                            @foreach($order->orderItems as $item)
+                            <li>{{ $item->food->name }} x {{ $item->quantity }}</li>
+                            @endforeach
+                        </ul>
                 </td>
                 <td>KES {{ $order->total }}</td>
                 <td>
