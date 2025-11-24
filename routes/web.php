@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CheckoutController;
 
@@ -28,28 +29,32 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
-| Customer Routes
+| Customer Dashboard
 |--------------------------------------------------------------------------
 */
-
-// Customer Dashboard
 Route::get('/customer/dashboard', function () {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
     return view('customer.dashboard');
 })->name('customer.dashboard');
 
-// Checkout page
+/*
+|--------------------------------------------------------------------------
+| Checkout
+|--------------------------------------------------------------------------
+*/
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-
-// Process payment
 Route::post('/checkout/pay', [CheckoutController::class, 'pay'])->name('checkout.pay');
 
 /*
 |--------------------------------------------------------------------------
-| Vendor Routes
+| Vendor Dashboard
 |--------------------------------------------------------------------------
 */
-
-// Vendor Dashboard
 Route::get('/vendor/dashboard', function () {
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
     return view('vendor.dashboard');
 })->name('vendor.dashboard');
