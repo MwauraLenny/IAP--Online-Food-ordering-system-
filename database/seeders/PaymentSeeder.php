@@ -3,16 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Order;
 use App\Models\Payment;
 
-class PaymentSeeder extends Seeder {
-    public function run(): void {
+class PaymentSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $order = Order::first();
+        if (!$order) return;
+
         Payment::create([
-            'order_id' => 1,
-            'payment_method' => 'mpesa',
-            'amount' => 950.00,
-            'transaction_code' => 'MP12345678',
-            'status' => 'completed'
+            'order_id'=>$order->id,
+            'method'=>'cash',
+            'amount'=>$order->total,
+            'status'=>'pending'
         ]);
     }
 }

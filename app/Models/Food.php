@@ -2,23 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Food extends Model
 {
     use HasFactory;
 
-    // Explicitly define the correct table
     protected $table = 'foods';
-
-    protected $fillable = [
-        'category_id',
-        'name',
-        'description',
-        'price',
-        'image',
-    ];
+    protected $fillable = ['name', 'description', 'price', 'stock', 'image', 'category_id'];
 
     public function category()
     {
@@ -28,10 +20,5 @@ class Food extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
-    }
-
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
     }
 }
